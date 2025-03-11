@@ -1,0 +1,289 @@
+body {
+    margin: 0;
+    background-color: #343131;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: calc(4vh - 10px);
+    background-color: #343131;
+}
+
+.logo {
+    font-size: 40px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 30px;
+
+}
+
+.logo a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.intro-note {
+    text-align: center;
+    padding: 3vh;
+    margin-right: 2vh;
+    margin-left: 2vh;
+    background-color: #f4f7fc;
+    border-radius: 10px;
+    background-image: url('../assets/dots.svg');
+    background-size: 4vh;
+    height: calc(90vh - 20px);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(45vh, 1fr));
+    gap: 10px;
+    overflow: auto;
+}
+
+.intro-note h1 {
+    font-size: 54px;
+    color: #333;
+}
+
+
+.add-note {
+    position: absolute;
+    bottom: 5vh;
+    right: 5vh;
+    border-radius: 30%;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0s, color 0s, transform 0.1s ease;
+    z-index: 10;
+}
+
+.add-note:hover {
+    transform: scale(1.2);
+    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sticky-note {
+    position: relative;
+    width: 80%;
+    min-width: 200px;
+    height: 30vh;
+    margin: 3vh;
+    padding: 10px;
+    background-color: #ffeebb;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    border: solid 1px #fff;
+    z-index: 1;
+}
+
+.sticky-note:hover {
+    transform: scale(1.1);
+    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.2);
+
+}
+
+.sticky-note {
+    transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.5s ease;
+}
+
+.sticky-note.expanded {
+    position: fixed;
+    top: 50%;
+    left: 38%;
+    transform: translate(0%, -50%) scale(1.2);
+    width: 400px;
+    height: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    background-color: #fff9e6;
+    z-index: 11;
+}
+
+
+.sticky-note .title {
+    flex: 1 1 auto;
+    padding: 0.6vh;
+    max-width: 280px;
+    font-size: 1.5vw;
+    font-weight: bold;
+    margin-bottom: 0.5vh;
+    margin-top: 1vh;
+    border: 1px solid #939185;
+    background: #f8fafc;
+    outline: none;
+    width: 82%;
+    color: #49243e;
+    text-overflow: ellipsis;
+    border-radius: 5px;
+}
+
+
+.sticky-note .content {
+    font-size: 1vw;
+    width: 100%;
+    height: calc(100% - 30px);
+    border: 1px solid #939185;
+    background: #f8fafc;
+    outline: none;
+    resize: none;
+    color: #3b1c32;
+    border-radius: 5px; 
+}
+
+
+
+.delete-btn {
+    position: absolute;
+    top: 20px;
+    right: 16px;
+    background: transparent;
+    cursor: pointer;
+    width: 30px; 
+    height: 30px; 
+    padding: 0; 
+    transition: background-color 0.3s, color 0.3s, transform 0.2s ease;
+}
+
+.delete-btn img {
+    width: 100%; 
+    height: 100%;
+}
+
+.edit-btn {
+    position: absolute;
+    top: 20px;
+    right: 68px;
+    background: transparent;
+    cursor: pointer;
+    width: 30px; 
+    height: 30px; 
+    padding: 0; 
+    transition: background-color 0.3s, color 0.3s, transform 0.2s ease;
+}
+
+.pin-btn {
+    position: absolute;
+    top: -26px;
+    left: -29px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    padding: 0; 
+    transition: background-color 0.3s, color 0.3s, transform 0.2s ease;
+    transform: rotate(12deg);
+}
+
+.edit-btn img {
+    width: 100%; 
+    height: 100%; 
+}
+
+.sticky-note.expanded .pin-btn {
+    position: absolute;
+    top: -39px;
+    left: -34px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s, transform 0.2s ease;
+    transform: rotate(12deg);
+}
+
+.sticky-note.expanded .pin-btn:hover {
+    transform: rotate(45deg);
+}
+
+.blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 10;
+}
+
+.icons {
+    display: flex;
+    gap: 0px;
+}
+
+.icons a {
+    text-decoration: none;
+    color: #fff;
+    margin-right: 20px;
+    transition: background-color 0s, color 0s, transform 0.2s ease;
+}
+
+.icons a:hover {
+    transform: scale(1.5);
+}
+
+.delete-btn:hover {
+    transform: scale(1.4);
+}
+
+.edit-btn:hover {
+    transform: scale(1.4);
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    font-size: 14px;
+    resize: none;
+}
+
+
+.intro-note::-webkit-scrollbar {
+    width: 8px;
+}
+
+.intro-note::-webkit-scrollbar-thumb {
+    background-color: #686d76; 
+    border-radius: 5px; 
+    transition: background-color 0.3s ease; 
+}
+
+.intro-note::-webkit-scrollbar-track {
+    background-color: #f1f1f1; 
+    border-radius: 100px; 
+}
+
+.intro-note::-webkit-scrollbar-thumb:hover {
+    background-color: #3c3d37; 
+    cursor: pointer;
+}
+
+
+.content::-webkit-scrollbar {
+    width: 6px;
+}
+
+
+.content::-webkit-scrollbar-thumb {
+    background-color: #686d76; 
+    border-radius: 5px; 
+    transition: background-color 0.3s ease; 
+}
+
+.content::-webkit-scrollbar-track {
+    background-color: #f1f1f1; 
+    border-radius: 100px; 
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+    background-color: #3c3d37; 
+    cursor: pointer;
+}

@@ -1,0 +1,138 @@
+/* Mặc định cho toàn bộ màn hình */
+  
+  /* Giao diện tổng thể */
+  .buy-me-coffee {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+    background-image: url('../assets/dots.svg');
+    background-size: 4vh;
+    padding: 20px;
+    box-sizing: border-box;
+    animation: fadeIn 1.2s ease-in-out;
+  }
+  
+  /* Chia layout 2 phần: Trái & Phải */
+  .left-section,
+  .right-section {
+    flex: 1;
+    max-width: 1000px;
+    padding: 20px;
+    margin: 10px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  
+  .left-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #343131;
+    border-radius: 12px;
+    height: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .left-section:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Mã QR */
+  .qr-code {
+    margin-left: 10px;
+    width: 300px;
+    height: 300px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .qr-code:hover {
+    transform: rotate(10deg) scale(1.05);
+  }
+  
+  /* Phần phải: Nội dung */
+  .right-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .right-section:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Tiêu đề */
+  .right-section h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    animation: slideInLeft 1s ease-out;
+  }
+  
+  /* Mô tả */
+  .right-section p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    animation: slideInRight 1s ease-out;
+  }
+  
+  /* Nút ủng hộ */
+  .donate-button {
+    background-color: #ff8c00;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    align-self: flex-start;
+  }
+  
+  .donate-button:hover {
+    background-color: #e67700;
+    transform: scale(1.1);
+  }
+  
+  /* Keyframes for animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInLeft {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  

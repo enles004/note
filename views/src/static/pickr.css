@@ -1,0 +1,40 @@
+/* Định nghĩa animation trượt từ bên trái */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Hộp màu */
+.color-picker-container {
+    position: absolute;
+    z-index: 100;
+    top: 4vh;
+    right: 125%;
+    animation: slideInFromLeft 0.25s ease-out; /* Thêm animation khi hiển thị */
+    transition: transform 0.3s ease; /* Thêm hiệu ứng mượt mà khi thay đổi */
+}
+
+/* Phóng to khi hover */
+.color-picker-container:hover {
+    transform: scale(1.1); /* Phóng to lên 10% khi hover */
+}
+
+/* Khi di chuột ra ngoài, hộp sẽ thu nhỏ từ từ */
+.color-picker-container:not(:hover) {
+    transform: scale(1); /* Quay lại kích thước ban đầu khi không hover */
+}
+
+.hex-color-input {
+    margin-top: 10px;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+}

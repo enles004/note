@@ -1,0 +1,22 @@
+
+
+.reminder-container {
+    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+
+.react-datepicker__input-container input {
+    height: 30px;
+    width: 150px;
+    font-size: 12px;
+}
+
+.react-datepicker__input-container select {
+    height: 30px;
+    width: 150px;
+    font-size: 12px;
+}
+
