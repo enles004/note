@@ -1,6 +1,5 @@
 import uvicorn
 from fastapi import FastAPI
-
 from controllers.apis import auth, notes, otp
 
 app = FastAPI()

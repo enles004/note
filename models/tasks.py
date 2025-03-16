@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, func, DateTime, Text, ForeignKey, Boolea
 from sqlalchemy.orm import relationship, joinedload
 import datetime
 from database import Base, connection, close
-from . import users
 
 
 class Task(Base):
@@ -42,7 +41,8 @@ class Task(Base):
     async def get_all_tasks(cls, current_user):
         try:
             db = await connection()
-            check_user = db.query(users.User).filter(users.User.id == current_user).first()
+            from models.users import User
+            check_user = db.query(User).filter(User.id == current_user).first()
             if check_user:
                 tasks = (db.query(Task)
                          .options(joinedload(Task.parent))
@@ -62,7 +62,8 @@ class Task(Base):
     async def create_task(cls, current_user, content, task_type, status, expiry, reminder, repeat, color, task_parent_id):
         try:
             db = await connection()
-            check_user = db.query(users.User).filter(users.User.id == current_user).first()
+            from models.users import User
+            check_user = db.query(User).filter(User.id == current_user).first()
             if not check_user:
                 raise Exception("User is not valid")
 
@@ -93,7 +94,8 @@ class Task(Base):
     async def create_subtasks(cls, current_user, tasks_data, task_parent_id):
         try:
             db = await connection()
-            check_user = db.query(users.User).filter(users.User.id == current_user).first()
+            from models.users import User
+            check_user = db.query(User).filter(User.id == current_user).first()
             if not check_user:
                 raise Exception("User is not valid")
 
