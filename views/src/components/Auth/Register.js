@@ -65,21 +65,25 @@ const Register = () => {
                 username: username
             };
 
-            const response = await axios.post('/api/v1/auth/register', payload);
-
-            if (response.data.status === 201) {
+            await axios.post('/api/v1/auth/register', payload).then(response => {
                 if (response.data.status === 201) {
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Registration successful!',
-                        icon: 'success',
-                        confirmButtonText: 'OK'
-                    }).then(() => {
-                        navigate('/login', { replace: true });
-                    });
-                }
-            }
+                    if (response.data.status === 201) {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Registration successful!',
+                            icon: 'success',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            navigate('/login', { replace: true });
+                        });
+                    }
+                }    
+            }).catch(error => {
+                setError("Something went wrong, try again!");
+                return;
+            });
 
+            
 
         } catch (err) {
             if (err.response.data.status === 400){

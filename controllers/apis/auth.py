@@ -40,7 +40,7 @@ async def login(payload: Annotated[OAuth2PasswordRequestForm, Depends()]):
 async def register(payload: Annotated[RegisterSchema, Body(embed=False)]):
     try:
         if await User.get_user(payload.email):
-            return JSONResponse(await email_exists(payload), status_code=400)
+            raise HTTPException(detail=await email_exists(payload), status_code=400)
 
         new_user = await User.create_user(payload)
 

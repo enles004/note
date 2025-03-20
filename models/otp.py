@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from sqlalchemy import Column, String, DateTime, Integer, ForeignKey, update, Boolean, delete, func
 
@@ -21,8 +21,9 @@ class OTP(Base):
         try:
             db = await connection()
             result = db.query(OTP).filter(OTP.email == email, OTP.otp == otp).first()
+            print(result)
             if not result:
-                return result
+                return False
 
             return result
         except Exception as err:
@@ -36,8 +37,8 @@ class OTP(Base):
         try:
             db = await connection()
 
-            time_now = datetime.datetime.now()
-            expiry_time = time_now + datetime.timedelta(minutes=2)
+            time_now = datetime.now()
+            expiry_time = time_now + timedelta(minutes=2)
 
             check_otp = db.query(OTP).filter(OTP.email == email).first()
             new_otp = None

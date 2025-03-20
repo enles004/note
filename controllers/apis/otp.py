@@ -50,12 +50,10 @@ async def verify_code(payload: Annotated[OTPSchema, Body(embed=False)]):
     try:
         email = payload.email
         otp_entered = payload.otp
-
         if not await User.get_user(email=email):
             return HTTPException(detail=await not_found(), status_code=404)
 
         otp = await OTP.get_otp(email=email, otp=otp_entered)
-
         if not otp:
             raise HTTPException(detail={"message": "OTP is incorrect!",
                             "status": 400,

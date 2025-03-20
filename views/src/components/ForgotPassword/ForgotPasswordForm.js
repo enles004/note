@@ -51,21 +51,20 @@ const ForgotPassword = () => {
         if (isOtpSent && timer > 0) {
         interval = setInterval(() => setTimer((prevTime) => prevTime - 1), 1000);
         } else if (timer === 0) {
-        setIsOtpValid(false); // OTP hết hạn
+        setIsOtpValid(false);
         clearInterval(interval);
         }
-        return () => clearInterval(interval); // Cleanup
+        return () => clearInterval(interval);
     }, [timer, isOtpSent]);
 
     const handleResendOtp = async () => {
-        setTimer(120); // Reset lại bộ đếm thời gian
-        setOtp(["", "", "", "", "", ""]); // Reset lại giá trị các ô nhập OTP về trống
-        setIsOtpValid(true); // Đặt lại trạng thái xác thực OTP
-        setIsOtpSent(true); // Gửi OTP lại, thiết lập trạng thái OTP đã được gửi
-        await axios.post('/api/forgot_password', {email: email});
+        setTimer(120);
+        setOtp(["", "", "", "", "", ""]);
+        setIsOtpValid(true);
+        setIsOtpSent(true);
+        await axios.post('/api/v1/auth/forgot_password', {email: email});
     };
 
-    // Logic để xử lý OTP
     const handleOtpChange = (e, index) => {
         const value = e.target.value;
         if (value === '' || /^[0-9]$/.test(value)) {
@@ -74,7 +73,7 @@ const ForgotPassword = () => {
         setOtp(otpCopy);
 
         if (value !== '' && index < otp.length - 1) {
-            document.getElementById(`otp-${index + 1}`).focus(); // Tự động chuyển sang ô tiếp theo
+            document.getElementById(`otp-${index + 1}`).focus();
         }
         }
     };
@@ -83,44 +82,48 @@ const ForgotPassword = () => {
         e.preventDefault();
         const enteredOtp = otp.join('');
         const otpInt = parseInt(enteredOtp, 10);
-        await axios.post('/api/v1/verify_otp', {email: email, otp: otpInt}).then(response => {
-            if (response.status === 200){
+        console.error = () => {};
+        try {
+            const response = await axios.post('/api/v1/auth/verify_otp', { email, otp: otpInt });
+            if (response.status === 201) {
                 setMessage('OTP authentication successful!');
-                setStep(3);  
+                setStep(3);
             }
-            else if (response.status === 404){
-                navigate('/not-found');
-            }
-            else{
-                setMessage('OTP is incorrect, please check again!');
-            }
-        })
+        } catch (error) {
+            setMessage(error.response.data.detail.message);
+            return;
+        }
     };
 
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
         setIsOtpSent(true);
-        await axios.post('/api/v1/forgot_password', {email: email}).then(response => {
-            if (response.status === 200){
+        await axios.post('/api/v1/auth/forgot_password', {email: email}).then(response => {
+            if (response.status === 201){
                 setStep(2); 
             }
-            else if (response.status === 404){
-                navigate('/not-found');
-            }
-        })
+        }).catch(error => {
+            navigate("/login");
+        });
     };
 
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
-        await axios.post('/api/v1/reset_password', {email: email, password: password, confirm_password: confirmPassword}).then(response => {
+        if (length(password) < 6 || length(confirmPassword) < 6){
+            setMessage("Password must be at least 6 characters long.");
+            return;
+        }
+        await axios.post('/api/v1/auth/reset_password', {email: email, new_password: password, confirm_new_password: confirmPassword}).then(response => {
             if (response.status === 200){
                 setMessage('Your password has been changed successfully!');
                 setTimeout(() => {
                     navigate("/login", {replace: true});
                 }, 1000);
             }
-            else if (response.status === 404){
+        }).catch(error => {
+            if (error.status === 404){
                 navigate('/not-found');
+                return;
             }
         })
         
