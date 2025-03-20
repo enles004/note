@@ -38,6 +38,12 @@ const Login = () => {
             return;
         }
 
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(username)) {
+            setError("Invalid email format!");
+            return;
+        }
+
         try {
             const payload = {
                 username: username,

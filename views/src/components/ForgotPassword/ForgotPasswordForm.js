@@ -98,6 +98,12 @@ const ForgotPassword = () => {
     const handleEmailSubmit = async (e) => {
         e.preventDefault();
         setIsOtpSent(true);
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setMessage("Invalid email format!");
+            return;
+        }
         await axios.post('/api/v1/auth/forgot_password', {email: email}).then(response => {
             if (response.status === 201){
                 setStep(2); 
@@ -109,7 +115,7 @@ const ForgotPassword = () => {
 
     const handlePasswordSubmit = async (e) => {
         e.preventDefault();
-        if (length(password) < 6 || length(confirmPassword) < 6){
+        if (password.length < 6 || confirmPassword.length < 6){
             setMessage("Password must be at least 6 characters long.");
             return;
         }

@@ -47,13 +47,24 @@ const Register = () => {
             return;
         }
 
-        if(username.length < 3){
-            setError("Username length in the range of 3 to 20!");
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            setError("Invalid email format!");
             return;
         }
 
-        if(password.length < 6){
+        else if(username.length < 6){
+            setError("Username length in the range of 6 to 20!");
+            return;
+        }
+
+        else if(password.length < 6){
             setError("Password length in the range of 6 to 20!");
+            return;
+        }
+
+        else if(confirmPassword !== password){
+            setError("Confirm password does not match password!");
             return;
         }
 
@@ -78,24 +89,10 @@ const Register = () => {
                         });
                     }
                 }    
-            }).catch(error => {
-                setError("Something went wrong, try again!");
-                return;
-            });
-
-            
-
+            })
         } catch (err) {
-            if (err.response.data.status === 400){
-                if (err.response.data.message.replace(/[\[\]']+/g, '') === 'Email Not a valid email address.'){
-                    setError("Email account is not in correct format!");
-                    return;
-                }
-                else if (err.response.data.message.replace(/[\[\]']+/g, '') === 'Email already exists'){
-                    setError("Email account is already registered, please use another account!");
-                    return;
-                }
-            }
+            setError("Something went wrong, try again!");
+            return;
         }
     };
 
